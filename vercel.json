@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/js/main.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "src/html/**",
+      "use": "@vercel/static"
+    },
+    {
+      "src": "src/css/**",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "src/js/main.js"
+    },
+    {
+      "src": "/login",
+      "dest": "src/html/login.html"
+    },
+    {
+      "src": "/admin",
+      "dest": "src/html/menu.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "src/html/$1"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}
