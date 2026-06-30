@@ -1,0 +1,71 @@
+/* Base Styling */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0d1117;
+  color: #c9d1d9;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #161b22;
+}
+::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8b5cf6;
+}
+
+/* Common Layout Components */
+.terminal-card {
+  background-color: #161b22;
+  border: 2px solid #30363d;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.3s ease;
+}
+
+.terminal-card:hover {
+  border-color: #8b5cf6;
+}
+
+.input-field {
+  width: 100%;
+  background-color: #0d1117;
+  border: 1px solid #30363d;
+  color: #58a6ff;
+  padding: 12px;
+  border-radius: 6px;
+  box-sizing: border-box;
+  margin-bottom: 15px;
+  font-family: inherit;
+}
+
+.input-field:focus {
+  border-color: #8b5cf6;
+  outline: none;
+}
+
+.action-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #7c3aed, #4c1d95);
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.action-btn:hover {
+  opacity: 0.9;
+}
