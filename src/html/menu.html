@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - JS & HTML Obfuscator</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .dashboard-wrapper {
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .sidebar {
+      width: 300px;
+      background-color: #161b22;
+      border-right: 2px solid #30363d;
+      padding: 20px;
+      display: flex;
+      flex-content: space-between;
+      flex-direction: column;
+    }
+    .main-workspace {
+      flex: 1;
+      padding: 25px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      background-color: #0d1117;
+      overflow-y: auto;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .stat-box {
+      background-color: #0d1117;
+      border: 1px solid #30363d;
+      padding: 10px;
+      border-radius: 6px;
+      text-align: center;
+    }
+    .nav-links div {
+      padding: 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+    .nav-links div:hover {
+      background-color: #21262d;
+      color: #8b5cf6;
+    }
+    .workspace-pane {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .code-area {
+      flex: 1;
+      width: 100%;
+      background-color: #0d1117;
+      border: 1px solid #30363d;
+      color: #7ef181;
+      font-family: monospace;
+      padding: 15px;
+      border-radius: 8px;
+      resize: none;
+      box-sizing: border-box;
+    }
+    .audio-widget {
+      background-color: #0d1117;
+      border: 1px solid #30363d;
+      padding: 12px;
+      border-radius: 10px;
+      text-align: center;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="dashboard-wrapper">
+    <aside class="sidebar">
+      <div>
+        <h3 style="color: #8b5cf6; margin-top: 0;">JS & HTML Obfuscator</h3>
+        <p style="font-size: 11px; color:#8b949e; margin-bottom: 15px;">rastadecor-core active</p>
+        
+        <div class="stats-grid">
+          <div class="stat-box"><div style="font-size:10px; color:#8b949e;">Uploaded</div><strong id="statUp">20</strong></div>
+          <div class="stat-box"><div style="font-size:10px; color:#8b949e;">Encrypted</div><strong id="statEnc" style="color:#7ef181;">12</strong></div>
+          <div class="stat-box"><div style="font-size:10px; color:#8b949e;">HTML</div><strong>8</strong></div>
+          <div class="stat-box"><div style="font-size:10px; color:#8b949e;">Pending</div><strong style="color:#e3b341;">10</strong></div>
+        </div>
+
+        <nav class="nav-links" style="font-size: 13px;">
+          <div>📋 Paste Workspace</div>
+          <div>📤 Upload Batch Files</div>
+          <div>⏳ History Log</div>
+          <div>🌐 Other Projects</div>
+        </nav>
+      </div>
+
+      <div class="audio-widget">
+        <span style="font-size: 9px; color: #8b5cf6; letter-spacing: 1px; font-weight: bold; display: block; margin-bottom: 4px;">PLAYING NOW</span>
+        <div style="font-size: 12px; font-weight: bold; color: #ffffff;">DREAM IT POSSIBLE</div>
+        <div style="font-size: 11px; color: #8b949e;">Joel ft James</div>
+        <div style="font-size: 10px; color: #30363d; margin-top: 5px;">joeljamestech inc 2026</div>
+      </div>
+    </aside>
+
+    <main class="main-workspace">
+      <div class="terminal-card workspace-pane">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <span style="font-weight: bold; color: #8b949e;">&gt; Paste Codes here</span>
+          <select id="modeSelect" class="input-field" style="width: auto; margin-bottom: 0; padding: 4px 10px;">
+            <option value="js">JavaScript (.js)</option>
+            <option value="html">HTML Layout (.html)</option>
+          </select>
+        </div>
+        <textarea id="rawInput" class="code-area" placeholder="Write or paste your raw system functions here..."></textarea>
+        <button id="encryptTrigger" class="action-btn" style="margin-top: 15px;">Run Obfuscation Engine</button>
+      </div>
+
+      <div class="terminal-card workspace-pane">
+        <div style="margin-bottom: 10px;"><span style="font-weight: bold; color: #8b949e;">&gt; Protected Code Output</span></div>
+        <textarea id="secureOutput" class="code-area" style="color: #c9d1d9;" readonly placeholder="Protected build variants string output..."></textarea>
+        <button id="downloadTrigger" class="action-btn" style="margin-top: 15px; background: linear-gradient(135deg, #059669, #047857);">Download Protected File</button>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Frontend operational management
+    document.getElementById('encryptTrigger').addEventListener('click', async () => {
+      const code = document.getElementById('rawInput').value;
+      const mode = document.getElementById('modeSelect').value;
+
+      if(!code.trim()) return alert("Input field cannot be empty!");
+
+      // Point directly to backend logic setup in main.js configuration
+      const res = await fetch('/api/encrypt', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code, mode })
+      });
+
+      const data = await res.json();
+      if(data.success) {
+        document.getElementById('secureOutput').value = data.output;
+        // Dynamically increment localized session metrics counters
+        const encBox = document.getElementById('statEnc');
+        encBox.innerText = parseInt(encBox.innerText) + 1;
+      } else {
+        alert("Compilation error processing string structure.");
+      }
+    });
+
+    document.getElementById('downloadTrigger').addEventListener('click', () => {
+      const outputText = document.getElementById('secureOutput').value;
+      const typeSelected = document.getElementById('modeSelect').value;
+      if(!outputText) return alert("No compiler output to generate package download.");
+
+      const element = document.createElement('a');
+      const file = new Blob([outputText], {type: 'text/plain'});
+      element.href = URL.createObjectURL(file);
+      element.download = `protected_build.${typeSelected}`;
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+    });
+  </script>
+</body>
+  </html>
