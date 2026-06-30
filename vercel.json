@@ -20,6 +20,10 @@
       "dest": "src/js/main.js"
     },
     {
+      "src": "/css/(.*)",
+      "dest": "src/css/$1"
+    },
+    {
       "src": "/login",
       "dest": "src/html/login.html"
     },
@@ -28,11 +32,12 @@
       "dest": "src/html/menu.html"
     },
     {
+      "src": "/",
+      "dest": "src/html/login.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "src/html/$1"
     }
-  ],
-  "env": {
-    "NODE_ENV": "production"
-  }
+  ]
 }
