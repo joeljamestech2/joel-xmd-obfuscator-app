@@ -1,0 +1,23 @@
+{
+  "name": "js-html-obfuscator",
+  "description": "Secure web application to obfuscate JavaScript and encrypt HTML code with a session management dashboard.",
+  "repository": "https://github.com/joeljamestech/js-html-obfuscator",
+  "logo": "https://raw.githubusercontent.com/joeljamestech/js-html-obfuscator/main/public/logo.png",
+  "keywords": ["obfuscator", "encryption", "html-security", "js-lock", "vercel"],
+  "authors": [
+    {
+      "name": "joeljamestech",
+      "url": "https://github.com/joeljamestech"
+    }
+  ],
+  "env": {
+    "JWT_SECRET": {
+      "description": "A secure random key for signing user authentication tokens.",
+      "required": true
+    },
+    "ADMIN_PASSWORD": {
+      "description": "The master passcode used to access the administration and encryption dashboard.",
+      "required": true
+    }
+  }
+}
